@@ -1,8 +1,5 @@
 module.exports = (err, req, res, next) => {
     switch (err.name) {
-        case "notFound":
-            res.status(404).json({ message: "Not found" })
-            break;
         case "SequelizeValidationError":
             res.status(400).json({
                 message: "Input failed",
@@ -20,6 +17,9 @@ module.exports = (err, req, res, next) => {
             break;
         case "forbidden":
             res.status(403).json({ message: "Forbidden" })
+            break;
+        case "notFound":
+            res.status(404).json({ message: "Not found" })
             break;
         case "SequelizeUniqueConstraintError":
             res.status(409).json({

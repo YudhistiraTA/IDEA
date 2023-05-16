@@ -40,7 +40,7 @@ _Response (201 - Created)_
 }
 ```
 
-_Respones (400 - Bad Request)
+_Response (400 - Bad Request)_
 
 ```json
 {
@@ -50,6 +50,15 @@ _Respones (400 - Bad Request)
         "Password is required",
         ...
     ]
+}
+```
+
+_Response (409 - Constraint Error)_
+
+```json
+{
+    "message": "Registration failed",
+    "error": "Email is already in use"
 }
 ```
 
@@ -229,6 +238,14 @@ _Response (200 - OK)_
 }
 ```
 
+_Response (404 - Not Found)_
+
+```json
+{
+  "message": "Not found"
+}
+```
+
 &nbsp;
 
 ## 6. POST /products/add
@@ -237,6 +254,14 @@ Description:
 - Add new product
 
 Request:
+
+- headers: 
+
+```json
+{
+  "access_token": "string"
+}
+```
 
 - body:
 
@@ -294,7 +319,14 @@ Description:
 
 Request:
 
+- headers: 
+
+```json
+{
+  "access_token": "string"
+}
 ```
+
 - params:
 
 ```json
@@ -323,11 +355,19 @@ _Response (200 - OK)_
 }
 ```
 
+_Response (403 - Forbidden)_
+
+```json
+{
+  "message": "Forbidden"
+}
+```
+
 _Response (404 - Not Found)_
 
 ```json
 {
-  "message": "Product with ID <id> not found"
+  "message": "Not found"
 }
 ```
 
