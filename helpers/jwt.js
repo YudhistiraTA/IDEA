@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-// const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || 'rahasia
-const JWT_SECRET_KEY = 'rahasia'
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || 'rahasia_dev';
 
 // create token
 const generateToken = (payload) => {
