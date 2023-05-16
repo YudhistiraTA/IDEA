@@ -4,7 +4,9 @@ const port = 3000
 const ProductController = require('./controllers/productController.js');
 const UserController = require('./controllers/userController.js');
 const CategoryController = require('./controllers/categoryController.js');
+const cors = require('cors')
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
