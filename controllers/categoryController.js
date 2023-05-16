@@ -1,7 +1,7 @@
 const { User, Category, Product } = require('../models');
 
 module.exports = class CategoryController {
-    static async createCategory(req, res) {
+    static async createCategory(req, res, next) {
         try {
             const { name } = req.body;
             const submittedData = await Category.create({ name });
@@ -11,18 +11,10 @@ module.exports = class CategoryController {
             })
         }
         catch (err) {
-            if (err.name === "SequelizeValidationError") {
-                res.status(400).json({
-                    error: err.errors
-                })
-            } else {
-                res.status(500).json({
-                    message: "Internal server error"
-                })
-            }
+            next(err);
         }
     }
-    static async readCategories(req, res) {
+    static async readCategories(req, res, next) {
         try {
             const requestedData = await Category.findAll();
             res.status(200).json({
@@ -31,9 +23,7 @@ module.exports = class CategoryController {
             })
         }
         catch (err) {
-            res.status(500).json({
-                message: "Internal server error"
-            })
+            next(err);
         }
     }
 }

@@ -1,25 +1,41 @@
 const { User, Category, Product } = require('../models');
+const { generateToken, verifyToken } = require('../helpers/jwt.js');
+const bcrypt = require("bcryptjs");
 
 module.exports = class UserController {
-    static async createUser(req, res) {
+    static async createUser(req, res, next) {
         try {
-            const { username, email, password, role, phoneNumber, address } = req.body;
-            const submittedData = await User.create({ username, email, password, role, phoneNumber, address });
+            const { email, password } = req.body;
+            const submittedData = await User.create({ email, password, role: "Admin" });
             res.status(201).json({
-                message: "Input success",
-                submittedData
+                message: "Registration success",
+                id: submittedData.id,
+                email: submittedData.email
             })
         }
         catch (err) {
-            if (err.name === "SequelizeValidationError") {
-                res.status(400).json({
-                    error: err.errors
-                })
-            } else {
-                res.status(500).json({
-                    message: "Internal server error"
-                })
-            }
+            next(err);
+        }
+    }
+    static async login(req, res, next) {
+        try {
+            const { email, password } = req.body;
+            if (!email || !password) throw { name: "invalidLogin" };
+            const foundUser = await User.findOne({ where: { "email": email } });
+            if (!foundUser) throw { name: "invalidLogin" };
+            if (!bcrypt.compareSync(password, foundUser.password)) throw { name: "invalidLogin" };
+            res.status(201).json({
+                message: "Login success",
+                access_token: generateToken({
+                    id: foundUser.id,
+                    role: foundUser.role
+                }),
+                email: foundUser.email,
+                role: foundUser.role
+            })
+        }
+        catch (err) {
+            next(err);
         }
     }
 }

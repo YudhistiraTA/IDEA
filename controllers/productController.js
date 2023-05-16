@@ -1,7 +1,7 @@
 const { User, Category, Product } = require('../models');
 
 module.exports = class ProductController {
-    static async createProduct(req, res) {
+    static async createProduct(req, res, next) {
         try {
             const { id, name, description, price, stock, imgUrl, categoryId, authorId } = req.body;
             const submittedData = await Product.create({ id, name, description, price, stock, imgUrl, categoryId, authorId });
@@ -11,18 +11,10 @@ module.exports = class ProductController {
             })
         }
         catch (err) {
-            if (err.name === "SequelizeValidationError") {
-                res.status(400).json({
-                    errors: err.errors.map((el) => el.message)
-                })
-            } else {
-                res.status(500).json({
-                    message: "Internal server error"
-                })
-            }
+            next(err);
         }
     }
-    static async readProducts(req, res) {
+    static async readProducts(req, res, next) {
         try {
             const requestedData = await Product.findAll({
                 include: {
@@ -36,57 +28,37 @@ module.exports = class ProductController {
             })
         }
         catch (err) {
-            res.status(500).json({
-                message: "Internal server error"
-            })
+            next(err);
         }
     }
-    static async readProductById(req, res) {
+    static async readProductById(req, res, next) {
         try {
             const { id } = req.params;
             const requestedData = await Product.findByPk(id);
-            if (!requestedData) throw { code: 404, msg: `Product with ID ${id} not found` };
+            if (!requestedData) throw { name: "notFound" };
             res.status(200).json({
                 message: "Request success",
                 requestedData
             })
         }
         catch (err) {
-            if (err.code === 404) {
-                res.status(err.code).json({
-                    message: err.msg
-                })
-            }
-            else {
-                res.status(500).json({
-                    message: "Internal server error",
-                })
-            }
+            next(err);
         }
     }
-    static async deleteProduct(req, res) {
+    static async deleteProduct(req, res, next) {
         try {
             const { id } = req.params;
             const deletedData = await Product.findByPk(id);
-            if (!deletedData) throw { code: 404, msg: `Product with ID ${id} not found` };
+            if (!deletedData) throw { name: "notFound" };
             const deletionStatus = await Product.destroy({ where: { id } });
-            if (!deletionStatus) throw { code: 404, msg: "Deletion failed" };
+            if (!deletionStatus) throw { name: "notFound" };
             res.status(200).json({
                 message: `Product with ID ${id} was successfully deleted`,
                 deletedData
             })
         }
         catch (err) {
-            if (err.code === 404) {
-                res.status(err.code).json({
-                    message: err.msg
-                })
-            }
-            else {
-                res.status(500).json({
-                    message: "Internal server error",
-                })
-            }
+            next(err);
         }
     }
 }

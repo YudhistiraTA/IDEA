@@ -1,18 +1,240 @@
-# Movie API Documentation
+# Branded Things API Documentation
 
 ## Endpoints :
 
 List of available endpoints:
 
-- `POST /products/add`
+- `POST /register`
+- `POST /login`
 - `GET /categories`
-- `GET /products/:id`
 - `GET /products`
+- `GET /products/:id`
+- `POST /products/add`
 - `DELETE /products/:id`
 
 &nbsp;
 
-## 1. POST /products/add
+## 1. POST /register
+
+Description:
+- Register a new ADMIN to the database
+
+Request:
+
+- body:
+
+```json
+{
+    "email": "string",
+    "password": "string"
+}
+```
+
+_Response (201 - Created)_
+
+```json
+{
+    "message": "Registration success",
+    "id": "integer",
+    "email": "string"
+}
+```
+
+_Respones (400 - Bad Request)
+
+```json
+{
+    "message": "Input failed",
+    "errors": [
+        "Email is required",
+        "Password is required",
+        ...
+    ]
+}
+```
+
+&nbsp;
+
+## 2. POST /login
+
+Request:
+
+- body:
+
+```json
+{
+    "email": "string",
+    "password": "string"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+    "message": "Login success",
+    "access_token": "string",
+    "email": "string",
+    "role": "string"
+}
+```
+
+_Response (400 - Bad Request)_
+
+```json
+{
+    "message": "Input failed",
+    "errors": [
+        "Email is required",
+        "Password is required",
+        ...
+    ]
+}
+```
+
+_Response (401 - Unauthorized)_
+
+```json
+{
+    "message": "Invalid email or password"
+}
+```
+
+&nbsp;
+
+## 3. GET /categories
+
+Description:
+- Get all categories from database
+
+Request:
+
+- headers: 
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+    "message": "Request success",
+    "requestedData": [
+        {
+            "id": "integer",
+            "name": "string",
+            "createdAt": "date",
+            "updatedAt": "date"
+        },
+        ...
+    ]
+}
+```
+
+&nbsp;
+
+## 4.GET /products
+
+Description:
+- Get all products from database
+
+Request:
+
+- headers: 
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+    "message": "Request success",
+    "requestedData": [
+        {
+            "id": "integer",
+            "name": "string",
+            "description": "string",
+            "price": "integer",
+            "stock": "integer",
+            "imgUrl": "string",
+            "categoryId": "integer",
+            "authorId": "integer",
+            "createdAt": "date",
+            "updatedAt": "date",
+            "User": {
+                "id": "integer",
+                "username": "string",
+                "email": "string",
+                "role": "string",
+                "phoneNumber": "string",
+                "address": "string",
+                "createdAt": "date",
+                "updatedAt": "date"
+            }
+        },
+        ...
+    ]
+}
+```
+
+&nbsp;
+
+## 5. GET /products/:id
+
+Description:
+- Get single product by ID from database
+
+Request:
+
+- headers: 
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+- Params:
+
+```json
+{
+  "id": "integer (required)"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+    "message": "Request success",
+    "requestedData": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "price": "integer",
+        "stock": "integer",
+        "imgUrl": "string",
+        "categoryId": "integer",
+        "authorId": "integer",
+        "createdAt": "date",
+        "updatedAt": "date"
+    }
+}
+```
+
+&nbsp;
+
+## 6. POST /products/add
+
+Description:
+- Add new product
 
 Request:
 
@@ -65,108 +287,7 @@ _Response (400 - Bad Request)_
 
 &nbsp;
 
-## 2. GET /categories
-
-Description:
-- Get all categories from database
-
-_Response (200 - OK)_
-
-```json
-{
-    "message": "Request success",
-    "requestedData": [
-        {
-            "id": "integer",
-            "name": "string",
-            "createdAt": "date",
-            "updatedAt": "date"
-        },
-        ...
-    ]
-}
-```
-
-&nbsp;
-
-## 3. GET /products/:id
-
-Description:
-- Get single product by ID from database
-
-Request:
-
-- Params:
-
-```json
-{
-  "id": "integer (required)"
-}
-```
-
-_Response (200 - OK)_
-
-```json
-{
-    "message": "Request success",
-    "requestedData": {
-        "id": "integer",
-        "name": "string",
-        "description": "string",
-        "price": "integer",
-        "stock": "integer",
-        "imgUrl": "string",
-        "categoryId": "integer",
-        "authorId": "integer",
-        "createdAt": "date",
-        "updatedAt": "date"
-    }
-}
-```
-
-&nbsp;
-
-## 4.GET /products
-
-Description:
-- Get all products from database
-
-_Response (200 - OK)_
-
-```json
-{
-    "message": "Request success",
-    "requestedData": [
-        {
-            "id": "integer",
-            "name": "string",
-            "description": "string",
-            "price": "integer",
-            "stock": "integer",
-            "imgUrl": "string",
-            "categoryId": "integer",
-            "authorId": "integer",
-            "createdAt": "date",
-            "updatedAt": "date",
-            "User": {
-                "id": "integer",
-                "username": "string",
-                "email": "string",
-                "role": "string",
-                "phoneNumber": "string",
-                "address": "string",
-                "createdAt": "date",
-                "updatedAt": "date"
-            }
-        },
-        ...
-    ]
-}
-```
-
-&nbsp;
-
-## 4. DELETE /products/:id
+## 7. DELETE /products/:id
 
 Description:
 - Delete product by id
@@ -214,6 +335,13 @@ _Response (404 - Not Found)_
 
 ## Global Error
 
+_Response (401 - Unauthorized)_
+
+```json
+{
+  "message": "Invalid token"
+}
+```
 
 _Response (500 - Internal Server Error)_
 

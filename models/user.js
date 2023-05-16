@@ -23,20 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notNull: {
-          args: true,
-          msg: "Username is required",
-        },
-        notEmpty: {
-          args: true,
-          msg: "Username is required",
-        },
-      },
-    },
+    username: DataTypes.STRING,
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -90,6 +77,18 @@ module.exports = (sequelize, DataTypes) => {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(user.password, salt);
         user.password = hash;
+      },
+      async afterCreate(user, options) {
+        user.username = `username${user.id}`;
+        await user.save({ transaction: options.transaction });
+      },
+      async afterBulkCreate(users, options) {
+        await Promise.all(
+          users.map((user) => {
+            user.username = `username${user.id}`;
+            return user.save({ transaction: options.transaction });
+          })
+        );
       },
     },
     sequelize,
