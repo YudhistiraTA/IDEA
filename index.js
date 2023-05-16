@@ -8,9 +8,9 @@ const CategoryController = require('./controllers/categoryController.js');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/users/add', UserController.createUser);
+// app.post('/users/add', UserController.createUser);
 
-app.post('/categories/add', CategoryController.createCategory);
+// app.post('/categories/add', CategoryController.createCategory);
 app.get('/categories', CategoryController.readCategories);
 
 app.post('/products/add', ProductController.createProduct);

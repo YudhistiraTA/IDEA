@@ -6,7 +6,6 @@ module.exports = class CategoryController {
             const { name } = req.body;
             const submittedData = await Category.create({ name });
             res.status(201).json({
-                code: 201,
                 message: "Input success",
                 submittedData
             })
@@ -14,12 +13,10 @@ module.exports = class CategoryController {
         catch (err) {
             if (err.name === "SequelizeValidationError") {
                 res.status(400).json({
-                    code: 400,
                     error: err.errors
                 })
             } else {
                 res.status(500).json({
-                    code: 500,
                     message: "Internal server error"
                 })
             }

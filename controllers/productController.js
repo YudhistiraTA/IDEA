@@ -13,7 +13,7 @@ module.exports = class ProductController {
         catch (err) {
             if (err.name === "SequelizeValidationError") {
                 res.status(400).json({
-                    error: err.errors
+                    errors: err.errors.map((el) => el.message)
                 })
             } else {
                 res.status(500).json({
@@ -24,7 +24,12 @@ module.exports = class ProductController {
     }
     static async readProducts(req, res) {
         try {
-            const requestedData = await Product.findAll();
+            const requestedData = await Product.findAll({
+                include: {
+                    model: User,
+                    attributes: { exclude: ['password'] }
+                }
+            });
             res.status(200).json({
                 message: "Request success",
                 requestedData
@@ -40,7 +45,6 @@ module.exports = class ProductController {
         try {
             const { id } = req.params;
             const requestedData = await Product.findByPk(id);
-            // handle data null
             if (!requestedData) throw { code: 404, msg: `Product with ID ${id} not found` };
             res.status(200).json({
                 message: "Request success",
