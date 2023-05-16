@@ -149,7 +149,7 @@ _Response (200 - OK)_
             "createdAt": "date",
             "updatedAt": "date",
             "User": {
-                "id": 1,
+                "id": "integer",
                 "username": "string",
                 "email": "string",
                 "role": "string",
