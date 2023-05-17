@@ -15,7 +15,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/register', UserController.createUser);
-app.post('/login', UserController.login)
+app.post('/login', UserController.login);
+app.post('/gsign', UserController.gSign);
 
 
 app.get('/categories', authentication, CategoryController.readCategories);
