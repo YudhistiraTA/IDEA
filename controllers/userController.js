@@ -31,7 +31,8 @@ module.exports = class UserController {
                     role: foundUser.role
                 }),
                 email: foundUser.email,
-                role: foundUser.role
+                role: foundUser.role,
+                username: foundUser.username
             })
         }
         catch (err) {
