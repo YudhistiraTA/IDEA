@@ -20,6 +20,7 @@ app.post('/gsign', UserController.gSign);
 
 
 app.get('/categories', authentication, CategoryController.readCategories);
+app.post('/categories/add', authentication, CategoryController.createCategory);
 
 app.post('/products/add', authentication, ProductController.createProduct);
 app.delete('/products/:id', authentication, deleteAuthorization, ProductController.deleteProduct);
