@@ -5,8 +5,8 @@ const bcrypt = require("bcryptjs");
 module.exports = class UserController {
     static async createUser(req, res, next) {
         try {
-            const { email, password } = req.body;
-            const submittedData = await User.create({ email, password, role: "Admin" });
+            const { username, email, password, phoneNumber, address } = req.body;
+            const submittedData = await User.create({ username, email, password, phoneNumber, address, role: "Admin" });
             res.status(201).json({
                 message: "Registration success",
                 id: submittedData.id,
