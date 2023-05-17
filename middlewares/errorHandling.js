@@ -24,7 +24,7 @@ module.exports = (err, req, res, next) => {
         case "SequelizeUniqueConstraintError":
             res.status(409).json({
                 message: "Registration failed",
-                error: "Email is already in use"
+                errors: "Email is already in use"
             })
             break;
         default:
