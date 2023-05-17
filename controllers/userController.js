@@ -1,7 +1,7 @@
 const { User, Category, Product } = require('../models');
 const { generateToken, verifyToken } = require('../helpers/jwt.js');
 const bcrypt = require("bcryptjs");
-const {OAuth2Client} = require('google-auth-library');
+const { OAuth2Client } = require('google-auth-library');
 
 module.exports = class UserController {
     static async createUser(req, res, next) {
@@ -51,10 +51,30 @@ module.exports = class UserController {
                 //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
             });
             const payload = ticket.getPayload();
-            console.log(payload);
             const userid = payload['sub'];
             // If request specified a G Suite domain:
             // const domain = payload['hd'];
+            const [user, created] = await User.findOrCreate({
+                where: { email: payload.email },
+                defaults: {
+                    username: payload.email.split('@')[0],
+                    email: payload.email,
+                    password: "GOOGLE_AUTH",
+                    phoneNumber: '',
+                    address: '',
+                    role: "Staff"
+                }
+            });
+            res.status(201).json({
+                message: "Login success",
+                access_token: generateToken({
+                    id: user.id,
+                    role: user.role
+                }),
+                email: user.email,
+                role: user.role,
+                username: user.username
+            })
         }
         catch (err) {
             next(err);
