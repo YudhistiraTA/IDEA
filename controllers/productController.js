@@ -3,7 +3,8 @@ const { User, Category, Product } = require('../models');
 module.exports = class ProductController {
     static async createProduct(req, res, next) {
         try {
-            const { id, name, description, price, stock, imgUrl, categoryId, authorId } = req.body;
+            const { id, name, description, price, stock, imgUrl, categoryId } = req.body;
+            const authorId = req.additionalData.id;
             const submittedData = await Product.create({ id, name, description, price, stock, imgUrl, categoryId, authorId });
             res.status(201).json({
                 message: "Input success",
