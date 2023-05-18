@@ -7,6 +7,7 @@ List of available endpoints:
 - `POST /register`
 - `POST /login`
 - `GET /categories`
+- `POST /categories/add`
 - `GET /products`
 - `GET /products/:id`
 - `POST /products/add`
@@ -145,7 +146,62 @@ _Response (200 - OK)_
 
 &nbsp;
 
-## 4.GET /products
+## 4. POST /categories/add
+
+Description:
+- Add new category
+
+Request:
+
+- headers: 
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+- body:
+
+```json
+{
+  "name": "string",
+  "description": "string",
+  "price": "integer",
+  "stock": "integer",
+  "imgUrl": "string",
+  "categoryId": "integer",
+  "authorId": "integer",
+}
+```
+
+_Response (201 - Created)_
+
+```json
+{
+    "message": "Input success",
+    "submittedData": {
+        "id": "integer",
+        "name": "string",
+        "createdAt": "date",
+        "updatedAt": "date"
+    }
+}
+```
+
+_Response (400 - Bad Request)_
+
+```json
+{
+    "errors": [
+        "Name is required"
+    ]
+}
+```
+
+&nbsp;
+
+## 5.GET /products
 
 Description:
 - Get all products from database
@@ -195,7 +251,7 @@ _Response (200 - OK)_
 
 &nbsp;
 
-## 5. GET /products/:id
+## 6. GET /products/:id
 
 Description:
 - Get single product by ID from database
@@ -248,7 +304,7 @@ _Response (404 - Not Found)_
 
 &nbsp;
 
-## 6. POST /products/add
+## 7. POST /products/add
 
 Description:
 - Add new product
@@ -312,7 +368,7 @@ _Response (400 - Bad Request)_
 
 &nbsp;
 
-## 7. DELETE /products/:id
+## 8. DELETE /products/:id
 
 Description:
 - Delete product by id
