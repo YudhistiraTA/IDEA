@@ -31,8 +31,8 @@ module.exports = class UserController {
                     id: foundUser.id,
                     role: foundUser.role
                 }),
-                email: foundUser.email,
-                role: foundUser.role,
+                // id: foundUser.id,
+                // role: foundUser.role,
                 username: foundUser.username
             })
         }
@@ -71,8 +71,8 @@ module.exports = class UserController {
                     id: user.id,
                     role: user.role
                 }),
-                email: user.email,
-                role: user.role,
+                // id: user.id,
+                // role: user.role,
                 username: user.username
             })
         }

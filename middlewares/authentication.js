@@ -10,7 +10,8 @@ module.exports = async (req, res, next) => {
         if (!userData) throw { name: "invalidToken" };
         req.additionalData = {
             id: payload.id,
-            role: payload.role
+            role: payload.role,
+            username: userData.username
         };
         next();
     } catch (err) {

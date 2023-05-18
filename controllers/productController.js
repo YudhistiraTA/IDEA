@@ -16,6 +16,8 @@ module.exports = class ProductController {
     }
     static async readProducts(req, res, next) {
         try {
+            const { username } = req.additionalData;
+            console.log(req.additionalData);
             const requestedData = await Product.findAll({
                 include: {
                     model: User,
@@ -24,7 +26,8 @@ module.exports = class ProductController {
             });
             res.status(200).json({
                 message: "Request success",
-                requestedData
+                requestedData,
+                username
             })
         }
         catch (err) {
