@@ -26,4 +26,19 @@ module.exports = class CategoryController {
             next(err);
         }
     }
+    static async deleteCategory(req, res, next) {
+        try {
+            const { id } = req.params;
+            const deletedData = await Category.findByPk(id);
+            const deletionStatus = await Category.destroy({ where: { id } });
+            if (!deletionStatus) throw { name: "notFound" };
+            res.status(200).json({
+                message: `Category with ID ${id} was successfully deleted`,
+                deletedData
+            })
+        }
+        catch (err) {
+            next(err);
+        }
+    }
 }

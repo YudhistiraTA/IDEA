@@ -53,7 +53,6 @@ module.exports = class ProductController {
         try {
             const { id } = req.params;
             const deletedData = await Product.findByPk(id);
-            if (!deletedData) throw { name: "notFound" };
             const deletionStatus = await Product.destroy({ where: { id } });
             if (!deletionStatus) throw { name: "notFound" };
             res.status(200).json({

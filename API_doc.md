@@ -8,6 +8,7 @@ List of available endpoints:
 - `POST /login`
 - `GET /categories`
 - `POST /categories/add`
+- `DELETE /categories/:id`
 - `GET /products`
 - `GET /products/:id`
 - `POST /products/add`
@@ -201,7 +202,54 @@ _Response (400 - Bad Request)_
 
 &nbsp;
 
-## 5.GET /products
+## 5. DELETE /categories/:id
+
+Description:
+- Delete category by id
+
+Request:
+
+- headers: 
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+- params:
+
+```json
+{
+  "id": "integer (required)"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+    "message": "Category with ID <id> was successfully deleted",
+    "deletedData": {
+        "id": "integer",
+        "name": "string",
+        "createdAt": "date",
+        "updatedAt": "date"
+    }
+}
+```
+
+_Response (409 - Database error)_
+
+```json
+{
+    "message": "This category is still in use!",
+}
+```
+
+&nbsp;
+
+## 6.GET /products
 
 Description:
 - Get all products from database
@@ -251,7 +299,7 @@ _Response (200 - OK)_
 
 &nbsp;
 
-## 6. GET /products/:id
+## 7. GET /products/:id
 
 Description:
 - Get single product by ID from database
@@ -304,7 +352,7 @@ _Response (404 - Not Found)_
 
 &nbsp;
 
-## 7. POST /products/add
+## 8. POST /products/add
 
 Description:
 - Add new product
@@ -368,7 +416,7 @@ _Response (400 - Bad Request)_
 
 &nbsp;
 
-## 8. DELETE /products/:id
+## 9. DELETE /products/:id
 
 Description:
 - Delete product by id

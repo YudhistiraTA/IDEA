@@ -9,6 +9,7 @@ const cors = require('cors');
 const errorHandling = require('./middlewares/errorHandling.js');
 const authentication = require('./middlewares/authentication.js');
 const deleteAuthorization = require('./middlewares/deleteAuthorization.js');
+const categoryDeleteAuthorization = require('./middlewares/categoryDeleteAuthorization.js');
 
 app.use(cors());
 app.use(express.json());
@@ -21,6 +22,7 @@ app.post('/gsign', UserController.gSign);
 
 app.get('/categories', authentication, CategoryController.readCategories);
 app.post('/categories/add', authentication, CategoryController.createCategory);
+app.delete('/categories/:id', authentication, categoryDeleteAuthorization, CategoryController.deleteCategory);
 
 app.post('/products/add', authentication, ProductController.createProduct);
 app.delete('/products/:id', authentication, deleteAuthorization, ProductController.deleteProduct);

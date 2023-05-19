@@ -27,8 +27,12 @@ module.exports = (err, req, res, next) => {
                 errors: "Email is already in use"
             })
             break;
+        case "SequelizeForeignKeyConstraintError":
+            res.status(409).json({
+                message: "This category is still in use!"
+            })
+            break;
         default:
-            console.log(err);
             res.status(500).json({ message: "Internal server error" })
             break;
     }
