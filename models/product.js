@@ -60,11 +60,11 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           args: true,
-          msg: "Name is required"
+          msg: "Price is required"
         },
         notNull: {
           args: true,
-          msg: "Name is required"
+          msg: "Price is required"
         },
         minValue(value) {
           if (value < 100) {
