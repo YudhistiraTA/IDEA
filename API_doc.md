@@ -85,6 +85,7 @@ _Response (200 - OK)_
 {
     "message": "Login success",
     "access_token": "string",
+    "username": "string"
 }
 ```
 
