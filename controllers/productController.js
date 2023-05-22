@@ -81,4 +81,18 @@ module.exports = class ProductController {
             next(err);
         }
     }
+    static async toggleStatusProduct(req, res, next) {
+        try {
+            const { id } = req.params;
+            const { currentStatus } = req.additionalData;
+            const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
+            const updatedData = await Product.update({status: newStatus}, {where: {id}});
+            res.status(200).json({
+                message: `Product status with ID ${id} has been updated from ${currentStatus} into ${newStatus}`
+            });
+        } 
+        catch (err) {
+            next(err);
+        }
+    }
 }
