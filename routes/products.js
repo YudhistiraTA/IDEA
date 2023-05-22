@@ -6,6 +6,7 @@ const deleteAuthorization = require('../middlewares/deleteAuthorization.js');
 router.get('/', ProductController.readProducts);
 router.post('/add', ProductController.createProduct);
 router.delete('/:id', deleteAuthorization, ProductController.deleteProduct);
+router.put('/:id', ProductController.updateProduct)
 router.get('/:id', ProductController.readProductById);
 
 module.exports = router;

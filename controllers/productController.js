@@ -64,4 +64,21 @@ module.exports = class ProductController {
             next(err);
         }
     }
+    static async updateProduct(req, res, next) {
+        try {
+            const { id } = req.params;
+            const foundProduct = await Product.findByPk(id, {attributes: ["authorId"]});
+            if (!foundProduct) throw { name: "notFound"};
+            const { name, description, price, stock, imgUrl, categoryId } = req.body;
+            const updatedData = await Product.update({ name, description, price, stock, imgUrl, categoryId, authorId:foundProduct.authorId }, {
+                where: {id}
+            });
+            res.status(200).json({
+                message: `Product with ID ${id} updated`
+            });
+        } 
+        catch (err) {
+            next(err);
+        }
+    }
 }
