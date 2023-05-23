@@ -1,4 +1,4 @@
-const { User, Category, Product } = require('../models');
+const { Category } = require('../models');
 
 module.exports = class CategoryController {
     static async createCategory(req, res, next) {

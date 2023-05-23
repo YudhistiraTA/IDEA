@@ -1,4 +1,4 @@
-const { User, Category, Product } = require('../models');
+const { User } = require('../models');
 const { generateToken, verifyToken } = require('../helpers/jwt.js');
 const bcrypt = require("bcryptjs");
 const { OAuth2Client } = require('google-auth-library');
