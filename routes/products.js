@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const ProductController = require('../controllers/productController.js');
-const deleteAuthorization = require('../middlewares/deleteAuthorization.js');
+// const deleteAuthorization = require('../middlewares/deleteAuthorization.js');
 const adminAuthorization = require('../middlewares/adminAuthorization.js');
 
 router.get('/', ProductController.readProducts);
