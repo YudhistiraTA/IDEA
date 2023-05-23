@@ -32,7 +32,7 @@ module.exports = (err, req, res, next) => {
             break;
         case "SequelizeForeignKeyConstraintError":
             res.status(409).json({
-                message: "This category is still in use!"
+                message: "This category is not available/still in use!"
             })
             break;
         default:

@@ -50,23 +50,25 @@ module.exports = class ProductController {
             next(err);
         }
     }
-    // static async archiveProduct(req, res, next) {
-    //     try {
-    //         const { id } = req.params;
-    //         const deletionStatus = await Product.update({status:"Archived"}, { where: { id } });
-    //         if (!deletionStatus) throw { name: "notFound" };
-    //         const newHistory = await History.create({name:"PATCH", 
-    //             description:`Product status with ID ${id} has been archived`, 
-    //             updatedBy:req.additionalData.id
-    //         });
-    //         res.status(200).json({
-    //             message: `Product with ID ${id} was successfully archived`,
-    //         })
-    //     }
-    //     catch (err) {
-    //         next(err);
-    //     }
-    // }
+    static async deleteProduct(req, res, next) {
+        try {
+            const { id } = req.params;
+            const deletedData = await Product.findByPk(id);
+            const deletionStatus = await Product.destroy({ where: { id } });
+            if (!deletionStatus) throw { name: "notFound" };
+            const newHistory = await History.create({name:"PATCH", 
+                description:`Product status with ID ${id} has been archived`, 
+                updatedBy:req.additionalData.id
+            });
+            res.status(200).json({
+                message: `Product with ID ${id} was successfully deleted`,
+                deletedData
+            })
+        }
+        catch (err) {
+            next(err);
+        }
+    }
     static async updateProduct(req, res, next) {
         try {
             const { id } = req.params;
