@@ -50,23 +50,23 @@ module.exports = class ProductController {
             next(err);
         }
     }
-    static async archiveProduct(req, res, next) {
-        try {
-            const { id } = req.params;
-            const deletionStatus = await Product.update({status:"Archived"}, { where: { id } });
-            if (!deletionStatus) throw { name: "notFound" };
-            const newHistory = await History.create({name:"PATCH", 
-                description:`Product status with ID ${id} has been archived`, 
-                updatedBy:req.additionalData.id
-            });
-            res.status(200).json({
-                message: `Product with ID ${id} was successfully archived`,
-            })
-        }
-        catch (err) {
-            next(err);
-        }
-    }
+    // static async archiveProduct(req, res, next) {
+    //     try {
+    //         const { id } = req.params;
+    //         const deletionStatus = await Product.update({status:"Archived"}, { where: { id } });
+    //         if (!deletionStatus) throw { name: "notFound" };
+    //         const newHistory = await History.create({name:"PATCH", 
+    //             description:`Product status with ID ${id} has been archived`, 
+    //             updatedBy:req.additionalData.id
+    //         });
+    //         res.status(200).json({
+    //             message: `Product with ID ${id} was successfully archived`,
+    //         })
+    //     }
+    //     catch (err) {
+    //         next(err);
+    //     }
+    // }
     static async updateProduct(req, res, next) {
         try {
             const { id } = req.params;
@@ -89,7 +89,7 @@ module.exports = class ProductController {
         try {
             const { id } = req.params;
             const { currentStatus } = req.additionalData;
-            const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
+            const { newStatus } = req.body;
             const updatedData = await Product.update({status: newStatus}, {where: {id}});
             const newHistory = await History.create({name:"PATCH", description:`Product status with ID ${id} has been updated from ${currentStatus} to ${newStatus}`, updatedBy:foundProduct.authorId});
             res.status(200).json({
