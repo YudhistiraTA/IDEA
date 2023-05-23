@@ -15,6 +15,9 @@ module.exports = (err, req, res, next) => {
         case "JsonWebTokenError":
             res.status(401).json({ message: "Invalid Token" })
             break;
+        case "TokenExpiredError":
+            res.status(401).json({ message: "Token expired" })
+            break;
         case "forbidden":
             res.status(403).json({ message: "Forbidden" })
             break;
@@ -33,6 +36,7 @@ module.exports = (err, req, res, next) => {
             })
             break;
         default:
+            console.log(err);
             res.status(500).json({ message: "Internal server error" })
             break;
     }

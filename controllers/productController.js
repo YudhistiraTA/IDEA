@@ -6,6 +6,7 @@ module.exports = class ProductController {
             const { id, name, description, price, stock, imgUrl, categoryId } = req.body;
             const authorId = req.additionalData.id;
             const submittedData = await Product.create({ id, name, description, price, stock, imgUrl, categoryId, authorId });
+            const newHistory = await History.create({name:"POST", description:`New Product with ID ${id} created`, updatedBy:authorId});
             res.status(201).json({
                 message: "Input success",
                 submittedData
@@ -49,15 +50,17 @@ module.exports = class ProductController {
             next(err);
         }
     }
-    static async deleteProduct(req, res, next) {
+    static async archiveProduct(req, res, next) {
         try {
             const { id } = req.params;
-            const deletedData = await Product.findByPk(id);
-            const deletionStatus = await Product.destroy({ where: { id } });
+            const deletionStatus = await Product.update({status:"Archived"}, { where: { id } });
             if (!deletionStatus) throw { name: "notFound" };
+            const newHistory = await History.create({name:"PATCH", 
+                description:`Product status with ID ${id} has been archived`, 
+                updatedBy:req.additionalData.id
+            });
             res.status(200).json({
-                message: `Product with ID ${id} was successfully deleted`,
-                deletedData
+                message: `Product with ID ${id} was successfully archived`,
             })
         }
         catch (err) {
@@ -73,6 +76,7 @@ module.exports = class ProductController {
             const updatedData = await Product.update({ name, description, price, stock, imgUrl, categoryId, authorId:foundProduct.authorId }, {
                 where: {id}
             });
+            const newHistory = await History.create({name:"PUT", description:`Product with ID ${id} updated`, updatedBy:foundProduct.authorId});
             res.status(200).json({
                 message: `Product with ID ${id} updated`
             });
@@ -87,6 +91,7 @@ module.exports = class ProductController {
             const { currentStatus } = req.additionalData;
             const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
             const updatedData = await Product.update({status: newStatus}, {where: {id}});
+            const newHistory = await History.create({name:"PATCH", description:`Product status with ID ${id} has been updated from ${currentStatus} to ${newStatus}`, updatedBy:foundProduct.authorId});
             res.status(200).json({
                 message: `Product status with ID ${id} has been updated from ${currentStatus} into ${newStatus}`
             });
