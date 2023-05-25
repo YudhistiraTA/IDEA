@@ -73,7 +73,7 @@ module.exports = class UserController {
                 }),
                 // id: user.id,
                 // role: user.role,
-                username: user.username
+                // username: user.username
             })
         }
         catch (err) {
