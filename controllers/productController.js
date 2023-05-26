@@ -24,7 +24,8 @@ module.exports = class ProductController {
                 include: {
                     model: User,
                     attributes: { exclude: ['password'] }
-                }
+                },
+                order: [['id', 'ASC']]
             });
             res.status(200).json({
                 message: "Request success",
