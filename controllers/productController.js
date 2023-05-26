@@ -18,7 +18,7 @@ module.exports = class ProductController {
     }
     static async readProducts(req, res, next) {
         try {
-            const { username } = req.additionalData;
+            const { role } = req.additionalData;
             console.log(req.additionalData);
             const requestedData = await Product.findAll({
                 include: {
@@ -30,7 +30,7 @@ module.exports = class ProductController {
             res.status(200).json({
                 message: "Request success",
                 requestedData,
-                username
+                role
             })
         }
         catch (err) {
@@ -94,7 +94,7 @@ module.exports = class ProductController {
             const { currentStatus } = req.additionalData;
             const { newStatus } = req.body;
             const updatedData = await Product.update({status: newStatus}, {where: {id}});
-            const newHistory = await History.create({name:"PATCH", description:`Product status with ID ${id} has been updated from ${currentStatus} to ${newStatus}`, updatedBy:foundProduct.authorId});
+            const newHistory = await History.create({name:"PATCH", description:`Product status with ID ${id} has been updated from ${currentStatus} to ${newStatus}`, updatedBy:req.additionalData.id});
             res.status(200).json({
                 message: `Product status with ID ${id} has been updated from ${currentStatus} into ${newStatus}`
             });

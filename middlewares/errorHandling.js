@@ -10,8 +10,6 @@ module.exports = (err, req, res, next) => {
             res.status(401).json({ message: "Invalid email or password" })
             break;
         case "invalidToken":
-            res.status(401).json({ message: "Invalid token" })
-            break;
         case "JsonWebTokenError":
             res.status(401).json({ message: "Invalid Token" })
             break;
