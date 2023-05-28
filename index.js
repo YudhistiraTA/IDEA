@@ -7,7 +7,7 @@ const errorHandling = require('./middlewares/errorHandling.js');
 const router = require('./routes');
 
 const corsOptions = {
-    origin: 'challenge1-387006.web.app', // replace with your app's URL
+    origin: 'https://challenge1-387006.web.app', // replace with your app's URL
     optionsSuccessStatus: 200 
 }
 
