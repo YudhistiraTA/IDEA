@@ -6,7 +6,7 @@ module.exports = class ProductController {
             const { name, description, price, stock, imgUrl, categoryId } = req.body;
             const authorId = req.additionalData.id;
             const submittedData = await Product.create({ name, description, price, stock, imgUrl, categoryId, authorId });
-            const newHistory = await History.create({name:"POST", description:`New Product with ID ${submittedData.id} created`, updatedBy:authorId});
+            const newHistory = await History.create({ name: "POST", description: `New Product with ID ${submittedData.id} created`, updatedBy: authorId });
             res.status(201).json({
                 message: "Input success",
                 submittedData
@@ -57,9 +57,10 @@ module.exports = class ProductController {
             const deletedData = await Product.findByPk(id);
             const deletionStatus = await Product.destroy({ where: { id } });
             if (!deletionStatus) throw { name: "notFound" };
-            const newHistory = await History.create({name:"PATCH", 
-                description:`Product status with ID ${id} has been archived`, 
-                updatedBy:req.additionalData.id
+            const newHistory = await History.create({
+                name: "PATCH",
+                description: `Product status with ID ${id} has been archived`,
+                updatedBy: req.additionalData.id
             });
             res.status(200).json({
                 message: `Product with ID ${id} was successfully deleted`,
@@ -73,17 +74,17 @@ module.exports = class ProductController {
     static async updateProduct(req, res, next) {
         try {
             const { id } = req.params;
-            const foundProduct = await Product.findByPk(id, {attributes: ["authorId"]});
-            if (!foundProduct) throw { name: "notFound"};
+            const foundProduct = await Product.findByPk(id, { attributes: ["authorId"] });
+            if (!foundProduct) throw { name: "notFound" };
             const { name, description, price, stock, imgUrl, categoryId } = req.body;
-            const updatedData = await Product.update({ name, description, price, stock, imgUrl, categoryId, authorId:foundProduct.authorId }, {
-                where: {id}
+            const updatedData = await Product.update({ name, description, price, stock, imgUrl, categoryId, authorId: foundProduct.authorId }, {
+                where: { id }
             });
-            const newHistory = await History.create({name:"PUT", description:`Product with ID ${id} updated`, updatedBy:foundProduct.authorId});
+            const newHistory = await History.create({ name: "PUT", description: `Product with ID ${id} updated`, updatedBy: foundProduct.authorId });
             res.status(200).json({
                 message: `Product with ID ${id} updated`
             });
-        } 
+        }
         catch (err) {
             next(err);
         }
@@ -93,14 +94,33 @@ module.exports = class ProductController {
             const { id } = req.params;
             const { currentStatus } = req.additionalData;
             const { newStatus } = req.body;
-            const updatedData = await Product.update({status: newStatus}, {where: {id}});
-            const newHistory = await History.create({name:"PATCH", description:`Product status with ID ${id} has been updated from ${currentStatus} to ${newStatus}`, updatedBy:req.additionalData.id});
+            const updatedData = await Product.update({ status: newStatus }, { where: { id } });
+            const newHistory = await History.create({ name: "PATCH", description: `Product status with ID ${id} has been updated from ${currentStatus} to ${newStatus}`, updatedBy: req.additionalData.id });
             res.status(200).json({
                 message: `Product status with ID ${id} has been updated from ${currentStatus} into ${newStatus}`
             });
-        } 
+        }
         catch (err) {
             next(err);
+        }
+    }
+    static async paginatedDisplay(req, res, next) {
+        try {
+            const limit = 8;
+            const offset = req.params.page || 0;
+            offset *= limit;
+            const options = {
+                limit,
+                offset,
+                where: {}, // conditions
+                include: {
+                    model: User,
+                    attributes: { exclude: ['password'] }
+                },
+            }
+        }
+        catch (error) {
+            next(error);
         }
     }
 }
