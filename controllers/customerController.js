@@ -80,7 +80,7 @@ module.exports = class CustomerController {
     }
     static async paginatedDisplay(req, res, next) {
         try {
-            const { search } = req.query;
+            const { search = '', filter } = req.query;
             const limit = 8;
             let offset = req.query.page? req.query.page - 1 : 0;
             offset *= limit;
@@ -92,7 +92,13 @@ module.exports = class CustomerController {
                     attributes: { exclude: ['password'] }
                 },
             }
-            if (search) options.where = {name: {[Op.iLike]: `%${search}%`}}
+            if (filter) options.where = {
+                name: {[Op.iLike]: `%${search}%`},
+                categoryId: filter
+            }
+            else if (search && !filter) options.where = {
+                name: {[Op.iLike]: `%${search}%`}
+            }
             const data = await Product.findAndCountAll(options);
             res.status(200).json(data.rows);
         }
