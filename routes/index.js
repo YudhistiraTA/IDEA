@@ -4,6 +4,7 @@ const UserController = require('../controllers/userController.js');
 const HistoryController = require('../controllers/historyController.js');
 const categoriesRouters = require('./categories.js');
 const productsRouters = require('./products.js');
+const publicRouters = require('./public.js');
 const authentication = require('../middlewares/authentication.js');
 
 router.post('/register', UserController.createUser);
@@ -14,5 +15,6 @@ router.get('/history', authentication, HistoryController.readHistory);
 
 router.use('/categories', authentication, categoriesRouters);
 router.use('/products', authentication, productsRouters);
+router.use('/public', customerAuthentication, publicRouters);
 
 module.exports = router;
