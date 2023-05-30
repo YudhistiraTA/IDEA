@@ -15,6 +15,6 @@ router.get('/history', authentication, HistoryController.readHistory);
 
 router.use('/categories', authentication, categoriesRouters);
 router.use('/products', authentication, productsRouters);
-router.use('/public', customerAuthentication, publicRouters);
+router.use('/public', publicRouters);
 
 module.exports = router;

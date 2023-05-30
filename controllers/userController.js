@@ -6,8 +6,9 @@ const { OAuth2Client } = require('google-auth-library');
 module.exports = class UserController {
     static async createUser(req, res, next) {
         try {
+            const role = req.originalUrl.includes('public') ? "Customer" : "Admin";
             const { username, email, password, phoneNumber, address } = req.body;
-            const submittedData = await User.create({ username, email, password, phoneNumber, address, role: "Admin" });
+            const submittedData = await User.create({ username, email, password, phoneNumber, address, role });
             res.status(201).json({
                 message: "Registration success",
                 id: submittedData.id,
@@ -54,6 +55,7 @@ module.exports = class UserController {
             const userid = payload['sub'];
             // If request specified a G Suite domain:
             // const domain = payload['hd'];
+            const role = req.originalUrl.includes('public') ? "Customer" : "Staff";
             const [user, created] = await User.findOrCreate({
                 where: { email: payload.email },
                 defaults: {
@@ -62,7 +64,7 @@ module.exports = class UserController {
                     password: "GOOGLE_AUTH",
                     phoneNumber: '',
                     address: '',
-                    role: "Staff"
+                    role
                 }
             });
             res.status(201).json({
