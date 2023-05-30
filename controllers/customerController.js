@@ -1,7 +1,8 @@
-const { Customer, CustomerProduct } = require('../models');
+const { Customer, CustomerProduct, Product, User } = require('../models');
 const bcrypt = require('bcryptjs');
 const { generateToken, verifyToken } = require('../helpers/jwt.js');
 const { OAuth2Client } = require('google-auth-library');
+const { Op } = require('sequelize');
 
 module.exports = class CustomerController {
     static async login(req, res, next) {
@@ -79,18 +80,21 @@ module.exports = class CustomerController {
     }
     static async paginatedDisplay(req, res, next) {
         try {
+            const { search } = req.query;
             const limit = 8;
-            const offset = req.params.page || 0;
+            let offset = req.query.page? req.query.page - 1 : 0;
             offset *= limit;
-            const options = {
+            let options = {
                 limit,
                 offset,
-                where: {}, // conditions
                 include: {
                     model: User,
                     attributes: { exclude: ['password'] }
                 },
             }
+            if (search) options.where = {name: {[Op.iLike]: `%${search}%`}}
+            const data = await Product.findAndCountAll(options);
+            res.status(200).json(data.rows);
         }
         catch (error) {
             next(error);
