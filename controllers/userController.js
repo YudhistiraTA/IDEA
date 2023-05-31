@@ -25,7 +25,7 @@ module.exports = class UserController {
             const foundUser = await User.findOne({ where: { "email": email } });
             if (!foundUser) throw { name: "invalidLogin" };
             if (!bcrypt.compareSync(password, foundUser.password)) throw { name: "invalidLogin" };
-            res.status(201).json({
+            res.status(200).json({
                 message: "Login success",
                 access_token: generateToken({
                     id: foundUser.id,
@@ -65,7 +65,7 @@ module.exports = class UserController {
                     role: 'Staff'
                 }
             });
-            res.status(201).json({
+            res.status(200).json({
                 message: "Login success",
                 access_token: generateToken({
                     id: user.id,

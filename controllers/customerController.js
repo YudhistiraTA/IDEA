@@ -12,7 +12,7 @@ module.exports = class CustomerController {
             const foundUser = await Customer.findOne({ where: { "email": email } });
             if (!foundUser) throw { name: "invalidLogin" };
             if (!bcrypt.compareSync(password, foundUser.password)) throw { name: "invalidLogin" };
-            res.status(201).json({
+            res.status(200).json({
                 message: "Login success",
                 access_token: generateToken({
                     id: foundUser.id,
@@ -63,7 +63,8 @@ module.exports = class CustomerController {
                     role: 'Customer'
                 }
             });
-            res.status(201).json({
+            const status = created ? 201 : 200;
+            res.status(status).json({
                 message: "Login success",
                 access_token: generateToken({
                     id: user.id,

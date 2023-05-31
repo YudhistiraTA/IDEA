@@ -12,7 +12,9 @@ describe('POST public/register', function () {
         expect(response.status).toEqual(201);
         expect(response.body).toHaveProperty("message", "Registration success");
         expect(response.body).toHaveProperty("id");
+        expect(typeof response.body.id).toBe("number");
         expect(response.body).toHaveProperty("email");
+        expect(typeof response.body.email).toBe("string");
     });
     it('Email already in use', async function () {
         const response = await request(app)
@@ -67,5 +69,35 @@ describe('POST public/register', function () {
             .expect('Content-Type', /json/)
         expect(response.status).toEqual(400);
         expect(response.body.errors).toEqual(["Invalid email format"]);
+    });
+});
+describe('POST public/login', function () {
+    it('Successful login', async function () {
+        const response = await request(app)
+            .post('/public/login')
+            .send({ email: 'TEST@mail.com', password: '12345' })
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+        expect(response.status).toEqual(200);
+        expect(response.body).toHaveProperty("message", "Login success");
+        expect(response.body).toHaveProperty("access_token");
+    });
+    it('Invalid password', async function () {
+        const response = await request(app)
+            .post('/public/login')
+            .send({ email: 'TEST@mail.com', password: '12347' })
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+        expect(response.status).toEqual(401);
+        expect(response.body).toHaveProperty("message", "Invalid email or password");
+    });
+    it('Unregistered email', async function () {
+        const response = await request(app)
+            .post('/public/login')
+            .send({ email: 'TEST_FALSE@mail.com', password: '12345' })
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+        expect(response.status).toEqual(401);
+        expect(response.body).toHaveProperty("message", "Invalid email or password");
     });
 })
