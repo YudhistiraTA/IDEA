@@ -1,0 +1,209 @@
+[
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 3330701,
+      "stock": 15,
+      "name": "Santos Watson",
+      "description": "Lorem nostrud sint laboris veniam Lorem.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 3736290,
+      "stock": 55,
+      "name": "Reyna Cooley",
+      "description": "Mollit in dolore laborum do pariatur eu esse irure exercitation ea ut.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 1119551,
+      "stock": 89,
+      "name": "Malinda Nelson",
+      "description": "Duis laborum consectetur esse nulla in ipsum et pariatur.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 1225711,
+      "stock": 50,
+      "name": "Audra Patel",
+      "description": "Nostrud ipsum dolor aliqua esse labore labore ex.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 2546043,
+      "stock": 87,
+      "name": "Jacobs Rivers",
+      "description": "Fugiat et duis enim cillum cupidatat Lorem culpa aute.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 1324143,
+      "stock": 97,
+      "name": "Petersen Figueroa",
+      "description": "Quis do ex reprehenderit esse culpa ad.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 3025260,
+      "stock": 37,
+      "name": "Essie Lambert",
+      "description": "Consequat velit aliquip pariatur do fugiat cillum proident minim amet et aute aute.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 2576147,
+      "stock": 55,
+      "name": "Anderson Sandoval",
+      "description": "Reprehenderit ea culpa consequat eiusmod esse culpa sint ullamco officia sunt adipisicing fugiat ullamco eiusmod.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 115844,
+      "stock": 78,
+      "name": "Sosa Medina",
+      "description": "Deserunt non irure qui incididunt esse magna commodo occaecat.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 3016250,
+      "stock": 60,
+      "name": "Hickman Snyder",
+      "description": "Sunt consectetur adipisicing ea cupidatat cupidatat veniam.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 3655482,
+      "stock": 1,
+      "name": "Lena Holden",
+      "description": "Irure duis officia est pariatur minim aliquip tempor tempor incididunt duis sunt enim ad.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 3065126,
+      "stock": 87,
+      "name": "Chrystal Schmidt",
+      "description": "Dolore proident sit eu eiusmod consectetur id ullamco adipisicing aute non exercitation mollit eiusmod.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 1643380,
+      "stock": 10,
+      "name": "Lelia Fuentes",
+      "description": "Elit cillum enim in non do voluptate excepteur qui officia labore.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 2172891,
+      "stock": 55,
+      "name": "Blankenship Burton",
+      "description": "Sint mollit quis irure aute voluptate aliqua deserunt qui amet sint deserunt duis magna est.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 2573401,
+      "stock": 53,
+      "name": "May Vasquez",
+      "description": "Lorem pariatur officia occaecat sint Lorem ad aliquip deserunt.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 3501199,
+      "stock": 22,
+      "name": "Fisher Padilla",
+      "description": "Excepteur nostrud id exercitation dolor incididunt quis cillum ut reprehenderit laboris ut.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 193632,
+      "stock": 73,
+      "name": "Katharine Hull",
+      "description": "Sint incididunt non id esse ut adipisicing consectetur laborum ad exercitation qui quis deserunt cillum.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 1748318,
+      "stock": 44,
+      "name": "Garrison Howell",
+      "description": "Lorem sint dolor ea proident.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 1359537,
+      "stock": 94,
+      "name": "Kirby Oliver",
+      "description": "Sit nulla Lorem commodo quis.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 2250258,
+      "stock": 41,
+      "name": "Evans Buckley",
+      "description": "Duis irure elit adipisicing non Lorem laboris voluptate laboris quis.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 1472478,
+      "stock": 29,
+      "name": "Faulkner Horton",
+      "description": "Excepteur irure ex tempor adipisicing duis proident.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 471045,
+      "stock": 70,
+      "name": "Marsha Cummings",
+      "description": "Culpa laboris consectetur sit ullamco ut id voluptate aliquip eiusmod consectetur sint eu.",
+      "categoryId": 1,
+      "authorId": 1
+    },
+    {
+      "imgUrl": "http://placehold.it/32x32",
+      "price": 2632126,
+      "stock": 27,
+      "name": "Jan Garza",
+      "description": "Elit consequat irure consectetur irure eu ipsum eu ad laboris.",
+      "categoryId": 1,
+      "authorId": 1
+    }
+  ]

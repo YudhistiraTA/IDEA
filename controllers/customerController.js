@@ -101,7 +101,13 @@ module.exports = class CustomerController {
                 name: {[Op.iLike]: `%${search}%`}
             }
             const data = await Product.findAndCountAll(options);
-            res.status(200).json(data.rows);
+            const response = {
+                totalItems: data.count,
+                products: data.rows,
+                totalPages: data.count/limit,
+                currentPage: req.query.page || 1
+            };
+            res.status(200).json(response);
         }
         catch (error) {
             next(error);
