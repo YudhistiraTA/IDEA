@@ -1,4 +1,5 @@
 const { User, Product, History } = require('../models');
+const axios = require('axios');
 
 module.exports = class ProductController {
     static async createProduct(req, res, next) {
@@ -42,9 +43,15 @@ module.exports = class ProductController {
             const { id } = req.params;
             const requestedData = await Product.findByPk(id);
             if (!requestedData) throw { name: "notFound" };
+            const { data:qr } = await axios.post('https://api.qr-code-generator.com/v1/create?access-token=38_SU4JLulJi9Jp3-JJzK9FFxFJoiZgXgC4CBTRSyTYIo7MgsXylek8RPdbvZj9v', {
+                frame_name: "no-frame",
+                qr_code_text: `http://localhost:3000/public/products/${id}`,
+                image_format: "SVG",
+            });
             res.status(200).json({
                 message: "Request success",
-                requestedData
+                requestedData,
+                qr
             })
         }
         catch (err) {
