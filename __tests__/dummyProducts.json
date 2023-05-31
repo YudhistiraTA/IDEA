@@ -5,7 +5,7 @@
       "stock": 15,
       "name": "Santos Watson",
       "description": "Lorem nostrud sint laboris veniam Lorem.",
-      "categoryId": 1,
+      "categoryId": 2,
       "authorId": 1
     },
     {
@@ -23,7 +23,7 @@
       "stock": 89,
       "name": "Malinda Nelson",
       "description": "Duis laborum consectetur esse nulla in ipsum et pariatur.",
-      "categoryId": 1,
+      "categoryId": 2,
       "authorId": 1
     },
     {
@@ -113,7 +113,7 @@
       "stock": 10,
       "name": "Lelia Fuentes",
       "description": "Elit cillum enim in non do voluptate excepteur qui officia labore.",
-      "categoryId": 1,
+      "categoryId": 2,
       "authorId": 1
     },
     {
@@ -122,7 +122,7 @@
       "stock": 55,
       "name": "Blankenship Burton",
       "description": "Sint mollit quis irure aute voluptate aliqua deserunt qui amet sint deserunt duis magna est.",
-      "categoryId": 1,
+      "categoryId": 2,
       "authorId": 1
     },
     {
@@ -149,7 +149,7 @@
       "stock": 73,
       "name": "Katharine Hull",
       "description": "Sint incididunt non id esse ut adipisicing consectetur laborum ad exercitation qui quis deserunt cillum.",
-      "categoryId": 1,
+      "categoryId": 2,
       "authorId": 1
     },
     {
@@ -158,7 +158,7 @@
       "stock": 44,
       "name": "Garrison Howell",
       "description": "Lorem sint dolor ea proident.",
-      "categoryId": 1,
+      "categoryId": 2,
       "authorId": 1
     },
     {
@@ -167,7 +167,7 @@
       "stock": 94,
       "name": "Kirby Oliver",
       "description": "Sit nulla Lorem commodo quis.",
-      "categoryId": 1,
+      "categoryId": 2,
       "authorId": 1
     },
     {
@@ -176,7 +176,7 @@
       "stock": 41,
       "name": "Evans Buckley",
       "description": "Duis irure elit adipisicing non Lorem laboris voluptate laboris quis.",
-      "categoryId": 1,
+      "categoryId": 2,
       "authorId": 1
     },
     {

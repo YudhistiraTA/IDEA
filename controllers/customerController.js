@@ -104,8 +104,8 @@ module.exports = class CustomerController {
             const response = {
                 totalItems: data.count,
                 products: data.rows,
-                totalPages: data.count/limit,
-                currentPage: req.query.page || 1
+                totalPages: Math.ceil(data.count/limit),
+                currentPage: +req.query.page || 1
             };
             res.status(200).json(response);
         }
