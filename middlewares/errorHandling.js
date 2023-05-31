@@ -1,9 +1,13 @@
 module.exports = (err, req, res, next) => {
     switch (err.name) {
         case "SequelizeValidationError":
+            let emailEmpty = false;
             res.status(400).json({
                 message: "Input failed",
-                errors: err.errors.map((el) => el.message)
+                errors: err.errors.flatMap((el) => {
+                    if (el.message === 'Email is required') emailEmpty = true;
+                    return emailEmpty && el.message === 'Invalid email format' ? [] : el.message;
+                })
             })
             break;
         case "invalidLogin":
