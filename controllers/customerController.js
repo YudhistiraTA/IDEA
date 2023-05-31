@@ -82,9 +82,10 @@ module.exports = class CustomerController {
     static async paginatedDisplay(req, res, next) {
         try {
             const { search = '', filter } = req.query;
-            const limit = 8;
-            let offset = req.query.page? req.query.page - 1 : 0;
-            offset *= limit;
+            const limit = 2;
+            let offset = +req.query.page ? req.query.page - 1 : 0;
+            if (offset > 0) offset *= limit;
+            else offset = 0;
             let options = {
                 limit,
                 offset,
@@ -94,23 +95,34 @@ module.exports = class CustomerController {
                 },
             }
             if (filter) options.where = {
-                name: {[Op.iLike]: `%${search}%`},
+                name: { [Op.iLike]: `%${search}%` },
                 categoryId: filter
             }
             else if (search && !filter) options.where = {
-                name: {[Op.iLike]: `%${search}%`}
+                name: { [Op.iLike]: `%${search}%` }
             }
             const data = await Product.findAndCountAll(options);
             const response = {
                 totalItems: data.count,
                 products: data.rows,
-                totalPages: Math.ceil(data.count/limit),
-                currentPage: +req.query.page || 1
+                totalPages: Math.ceil(data.count / limit),
+                currentPage: +req.query.page > 0 ? +req.query.page : 1
             };
             res.status(200).json(response);
         }
         catch (error) {
             next(error);
+        }
+    }
+    static async addToWishlist(req, res, next) {
+        try {
+            const { id:customerId } = req.additionalData;
+            const { id:productId } = req.params;
+            await CustomerProduct.create({customerId, productId});
+            res.status(201).json({message: `Product with ID ${productId} added to wishlist`});
+        } 
+        catch (error) {
+            next(error)    
         }
     }
 }

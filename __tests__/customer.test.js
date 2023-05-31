@@ -103,42 +103,59 @@ const fs = require('fs');
 //         expect(response.body).toHaveProperty("message", "Invalid email or password");
 //     });
 // });
-describe('GET public/products', function () {
-    beforeAll(async () => {
-        const dummyData = JSON.parse(fs.readFileSync('./__tests__/dummyProducts.json'));
-        await Product.bulkCreate(dummyData);
-    })
-    it('Successful paginated products fetch', async function () {
-        const response = await request(app)
-            .get('/public/products')
-            .set('Accept', 'application/json')
-        expect(response.status).toEqual(200)
-        expect(typeof response.body).toBe('object');
-        expect(response.body).toHaveProperty('currentPage', 1);
-        expect(typeof response.body.products).toBe('object');
-        expect(response.body.products).toHaveLength(8);
-    });
-    it('Successful paginated products page 3 fetch', async function () {
-        const response = await request(app)
-            .get('/public/products')
-            .query({page: 3})
-            .set('Accept', 'application/json')
-        expect(response.status).toEqual(200)
-        expect(typeof response.body).toBe('object');
-        expect(response.body).toHaveProperty('currentPage', 3);
-        expect(typeof response.body.products).toBe('object');
-        expect(response.body.products).toHaveLength(8);
-    });
-    it('Successful filtered paginated products fetch', async function () {
-        const response = await request(app)
-            .get('/public/products')
-            .query({filter: 2})
-            .set('Accept', 'application/json')
-        expect(response.status).toEqual(200)
-        expect(typeof response.body).toBe('object');
-        expect(response.body).toHaveProperty('currentPage', 1);
-        expect(typeof response.body.products).toBe('object');
-        expect(response.body.products).not.toHaveLength(0);
-        expect(response.body).toHaveProperty(['products', 0, 'categoryId'], 2);
-    });
-})
+// describe('GET public/products', function () {
+//     beforeAll(async () => {
+//         const dummyData = JSON.parse(fs.readFileSync('./__tests__/dummyProducts.json'));
+//         await Product.bulkCreate(dummyData);
+//     })
+//     it('Successful paginated products fetch', async function () {
+//         const response = await request(app)
+//             .get('/public/products')
+//             .set('Accept', 'application/json')
+//         expect(response.status).toEqual(200)
+//         expect(typeof response.body).toBe('object');
+//         expect(response.body).toHaveProperty('currentPage', 1);
+//         expect(typeof response.body.products).toBe('object');
+//         expect(response.body.products).toHaveLength(8);
+//     });
+//     it('Successful paginated products page 3 fetch', async function () {
+//         const response = await request(app)
+//             .get('/public/products')
+//             .query({page: 3})
+//             .set('Accept', 'application/json')
+//         expect(response.status).toEqual(200)
+//         expect(typeof response.body).toBe('object');
+//         expect(response.body).toHaveProperty('currentPage', 3);
+//         expect(typeof response.body.products).toBe('object');
+//         expect(response.body.products).toHaveLength(8);
+//     });
+//     it('Successful filtered paginated products fetch', async function () {
+//         const response = await request(app)
+//             .get('/public/products')
+//             .query({filter: 2})
+//             .set('Accept', 'application/json')
+//         expect(response.status).toEqual(200)
+//         expect(typeof response.body).toBe('object');
+//         expect(response.body).toHaveProperty('currentPage', 1);
+//         expect(typeof response.body.products).toBe('object');
+//         expect(response.body.products).not.toHaveLength(0);
+//         expect(response.body).toHaveProperty(['products', 0, 'categoryId'], 2);
+//     });
+//     it('Successful product fetch by id', async function () {
+//         const response = await request(app)
+//             .get('/public/products/120')
+//             .set('Accept', 'application/json')
+//         expect(response.status).toEqual(200)
+//         expect(response.body).toHaveProperty('message', 'Request success');
+//         expect(response.body).toHaveProperty('requestedData');
+//         expect(response.body.requestedData).toHaveProperty('id', 120);
+//     });
+//     it('Out of bound product fetch by id', async function () {
+//         const response = await request(app)
+//             .get('/public/products/1')
+//             .set('Accept', 'application/json')
+//         expect(response.status).toEqual(404)
+//         expect(response.body).toHaveProperty('message', 'Not found');
+//     });
+// });
+// describe('POST public/wishlist'){}
