@@ -82,7 +82,7 @@ module.exports = class CustomerController {
     static async paginatedDisplay(req, res, next) {
         try {
             const { search = '', filter } = req.query;
-            const limit = 2;
+            const limit = 8;
             let offset = +req.query.page ? req.query.page - 1 : 0;
             if (offset > 0) offset *= limit;
             else offset = 0;
@@ -116,13 +116,33 @@ module.exports = class CustomerController {
     }
     static async addToWishlist(req, res, next) {
         try {
-            const { id:customerId } = req.additionalData;
-            const { id:productId } = req.params;
-            await CustomerProduct.create({customerId, productId});
-            res.status(201).json({message: `Product with ID ${productId} added to wishlist`});
+            const { id:CustomerId } = req.additionalData;
+            const { id:ProductId } = req.params;
+            const foundProduct = await Product.findByPk(ProductId);
+            if (!foundProduct) throw {name: "notFound"};
+            await CustomerProduct.create({CustomerId, ProductId});
+            res.status(201).json({message: `Product with ID ${ProductId} added to wishlist`});
         } 
         catch (error) {
             next(error)    
+        }
+    }
+    static async readWishlist(req, res, next) {
+        try {
+            const { id:CustomerId } = req.additionalData;
+            const requestedData = await CustomerProduct.findAll({
+                where: {CustomerId},
+                include: {
+                    model: Product
+                }
+            });
+            res.status(200).json({
+                message: "Request success",
+                requestedData
+            });
+        } 
+        catch (error) {
+            next(error);    
         }
     }
 }
