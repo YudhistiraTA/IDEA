@@ -190,7 +190,6 @@ describe.only('POST public/wishlist', function () {
         const response = await request(app)
             .post('/public/wishlist/add/2')
             .set({ access_token, Accept: 'application/json' });
-        console.log(response.body);
         expect(response.status).toEqual(201)
         expect(response.body).toHaveProperty('message', 'Product with ID 2 added to wishlist');
     });
@@ -198,23 +197,20 @@ describe.only('POST public/wishlist', function () {
         const response = await request(app)
             .post('/public/wishlist/add/100')
             .set({ access_token, Accept: 'application/json' });
-        console.log(response.body);
         expect(response.status).toEqual(404)
         expect(response.body).toHaveProperty('message', 'Not found');
     });
-    it('Customer is not signed in yet', async function () {
+    it('Customer is not signed in yet while adding wishlist', async function () {
         const response = await request(app)
             .post('/public/wishlist/add/2')
             .set({ Accept: 'application/json' });
-        console.log(response.body);
         expect(response.status).toEqual(401)
         expect(response.body).toHaveProperty('message', 'Invalid Token');
     });
-    it('access_token is invalid', async function () {
+    it('access_token is invalid while adding wishlist', async function () {
         const response = await request(app)
             .post('/public/wishlist/add/2')
             .set({ access_token: 'guhehe', Accept: 'application/json' });
-        console.log(response.body);
         expect(response.status).toEqual(401)
         expect(response.body).toHaveProperty('message', 'Invalid Token');
     });
@@ -222,12 +218,25 @@ describe.only('POST public/wishlist', function () {
         const response = await request(app)
             .get('/public/wishlist')
             .set({ access_token, Accept: 'application/json' });
-        console.log(response.body);
         expect(response.status).toEqual(200)
         expect(response.body).toHaveProperty('message', 'Request success');
         expect(response.body).toHaveProperty('requestedData');
         expect(response.body.requestedData).not.toHaveLength(0);
         expect(response.body.requestedData[0]).toHaveProperty('Product');
         expect(typeof response.body.requestedData[0].Product).toBe('object');
+    });
+    it('access_token is invalid while reading wishlist', async function () {
+        const response = await request(app)
+            .get('/public/wishlist')
+            .set({ access_token: 'guhehe', Accept: 'application/json' });
+        expect(response.status).toEqual(401)
+        expect(response.body).toHaveProperty('message', 'Invalid Token');
+    });
+    it('Customer is not signed in while reading wishlist', async function () {
+        const response = await request(app)
+            .get('/public/wishlist')
+            .set({ Accept: 'application/json' });
+        expect(response.status).toEqual(401)
+        expect(response.body).toHaveProperty('message', 'Invalid Token');
     });
 });
