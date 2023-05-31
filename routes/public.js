@@ -9,7 +9,7 @@ router.post('/login', CustomerController.login);
 router.post('/gsign', CustomerController.gSign);
 router.get('/products', CustomerController.paginatedDisplay);
 router.get('/products/:id', ProductController.readProductById);
-router.get('/wishlist/add/:id', customerAuthentication, CustomerController.readWishlist);
+router.get('/wishlist', customerAuthentication, CustomerController.readWishlist);
 router.post('/wishlist/add/:id', customerAuthentication, CustomerController.addToWishlist);
 
 module.exports = router;

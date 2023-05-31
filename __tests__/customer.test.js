@@ -218,4 +218,16 @@ describe.only('POST public/wishlist', function () {
         expect(response.status).toEqual(401)
         expect(response.body).toHaveProperty('message', 'Invalid Token');
     });
+    it('Get all wishlist', async function () {
+        const response = await request(app)
+            .get('/public/wishlist')
+            .set({ access_token, Accept: 'application/json' });
+        console.log(response.body);
+        expect(response.status).toEqual(200)
+        expect(response.body).toHaveProperty('message', 'Request success');
+        expect(response.body).toHaveProperty('requestedData');
+        expect(response.body.requestedData).not.toHaveLength(0);
+        expect(response.body.requestedData[0]).toHaveProperty('Product');
+        expect(typeof response.body.requestedData[0].Product).toBe('object');
+    });
 });
