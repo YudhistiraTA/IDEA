@@ -33,8 +33,10 @@ module.exports = class CustomerController {
             const submittedData = await Customer.create({ email, password, role: 'Customer' });
             res.status(201).json({
                 message: "Registration success",
-                id: submittedData.id,
-                email: submittedData.email
+                access_token: generateToken({
+                    id: submittedData.id,
+                    role: submittedData.role
+                })
             })
         }
         catch (err) {
