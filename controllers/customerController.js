@@ -1,4 +1,4 @@
-const { Customer, CustomerProduct, Product, User } = require('../models');
+const { Customer, CustomerProduct, Product, Category } = require('../models');
 const bcrypt = require('bcryptjs');
 const { generateToken, verifyToken } = require('../helpers/jwt.js');
 const { OAuth2Client } = require('google-auth-library');
@@ -85,7 +85,7 @@ module.exports = class CustomerController {
         try {
             const { search = '', filter } = req.query;
             const limit = 8;
-            let offset = +req.query.page ? req.query.page - 1 : 0;
+            let offset = +req.query.page ? +req.query.page - 1 : 0;
             if (offset > 0) offset *= limit;
             else offset = 0;
             let options = {
