@@ -134,7 +134,10 @@ module.exports = class CustomerController {
             const requestedData = await CustomerProduct.findAll({
                 where: {CustomerId},
                 include: {
-                    model: Product
+                    model: Product,
+                    include: {
+                        model: Category
+                    }
                 }
             });
             res.status(200).json({
