@@ -92,8 +92,7 @@ module.exports = class CustomerController {
                 limit,
                 offset,
                 include: {
-                    model: User,
-                    attributes: { exclude: ['password'] }
+                    model: Category
                 },
             }
             if (filter) options.where = {
