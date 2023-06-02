@@ -21,10 +21,8 @@ describe('POST public/register', function () {
             .expect('Content-Type', /json/)
         expect(response.status).toEqual(201);
         expect(response.body).toHaveProperty("message", "Registration success");
-        expect(response.body).toHaveProperty("id");
-        expect(typeof response.body.id).toBe("number");
-        expect(response.body).toHaveProperty("email");
-        expect(typeof response.body.email).toBe("string");
+        expect(response.body).toHaveProperty("access_token");
+        expect(typeof response.body.access_token).toBe("string");
     });
     it('Email already in use', async function () {
         const response = await request(app)
@@ -33,7 +31,7 @@ describe('POST public/register', function () {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
         expect(response.status).toEqual(409);
-        expect(response.body.errors).toEqual("Email is already in use");
+        expect(response.body.message).toEqual("Email is already in use");
     });
     it('Email is null', async function () {
         const response = await request(app)
@@ -42,7 +40,7 @@ describe('POST public/register', function () {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
         expect(response.status).toEqual(400);
-        expect(response.body.errors).toEqual(["Email is required"]);
+        expect(response.body.message).toEqual(["Email is required"]);
     });
     it('Password is null', async function () {
         const response = await request(app)
@@ -51,7 +49,7 @@ describe('POST public/register', function () {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
         expect(response.status).toEqual(400);
-        expect(response.body.errors).toEqual(["Password is required"]);
+        expect(response.body.message).toEqual(["Password is required"]);
     });
     it('Email is empty', async function () {
         const response = await request(app)
@@ -60,7 +58,7 @@ describe('POST public/register', function () {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
         expect(response.status).toEqual(400);
-        expect(response.body.errors).toEqual(["Email is required"]);
+        expect(response.body.message).toEqual(["Email is required"]);
     });
     it('Password is empty', async function () {
         const response = await request(app)
@@ -69,7 +67,7 @@ describe('POST public/register', function () {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
         expect(response.status).toEqual(400);
-        expect(response.body.errors).toEqual(["Password is required"]);
+        expect(response.body.message).toEqual(["Password is required"]);
     });
     it('Invalid email format', async function () {
         const response = await request(app)
@@ -78,7 +76,7 @@ describe('POST public/register', function () {
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
         expect(response.status).toEqual(400);
-        expect(response.body.errors).toEqual(["Invalid email format"]);
+        expect(response.body.message).toEqual(["Invalid email format"]);
     });
 });
 describe('POST public/login', function () {
@@ -172,7 +170,7 @@ describe('GET public/products', function () {
         expect(response.body).toHaveProperty('message', 'Not found');
     });
 });
-describe.only('POST public/wishlist', function () {
+describe('POST public/wishlist', function () {
     let access_token;
     beforeAll(async () => {
         await CustomerProduct.destroy({
@@ -183,7 +181,7 @@ describe.only('POST public/wishlist', function () {
         });
         const response = await request(app)
             .post('/public/login')
-            .send({ email: 'master@mail.com', password: '12345' })
+            .send({ email: 'TEST@mail.com', password: '12345' })
         access_token = response.body.access_token;
     });
     it('Successful add product to wishlist', async function () {
