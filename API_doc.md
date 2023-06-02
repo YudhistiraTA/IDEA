@@ -17,6 +17,13 @@ List of available endpoints:
 - `PUT /products/:id`
 - `PATCH /products/:id`
 - `DELETE /products/delete/:id`
+- `POST /public/register`
+- `POST /public/login`
+- `POST /public/gsign`
+- `GET /public/products`
+- `GET /public/products/:id`
+- `GET /public/wishlist`
+- `POST /public/wishlist/add/:id`
 
 &nbsp;
 
@@ -31,8 +38,11 @@ Request:
 
 ```json
 {
+    "username": "string",
     "email": "string",
-    "password": "string"
+    "password": "string",
+    "phoneNumber": "string",
+    "address": "string"
 }
 ```
 
@@ -50,8 +60,7 @@ _Response (400 - Bad Request)_
 
 ```json
 {
-    "message": "Input failed",
-    "errors": [
+    "message": [
         "Email is required",
         "Password is required",
         ...
@@ -63,8 +72,7 @@ _Response (409 - Constraint Error)_
 
 ```json
 {
-    "message": "Registration failed",
-    "error": "Email is already in use"
+    "message": "Email is already in use"
 }
 ```
 
@@ -73,7 +81,7 @@ _Response (409 - Constraint Error)_
 ## 2. POST /login
 
 Description:
-- Log in into an ADMIN account
+- Logs in into an ADMIN account
 
 Request:
 
@@ -99,8 +107,7 @@ _Response (400 - Bad Request)_
 
 ```json
 {
-    "message": "Input failed",
-    "errors": [
+    "message": [
         "Email is required",
         "Password is required",
         ...
@@ -121,7 +128,7 @@ _Response (401 - Unauthorized)_
 ## 3. POST /gsign
 
 Description:
-- Log in into a STAFF account using a Google account
+- Logs in into a STAFF account using a Google account
 - Create a new STAFF account if no matching account is found in the database
 
 Request:
@@ -233,13 +240,7 @@ Request:
 
 ```json
 {
-  "name": "string",
-  "description": "string",
-  "price": "integer",
-  "stock": "integer",
-  "imgUrl": "string",
-  "categoryId": "integer",
-  "authorId": "integer",
+  "name": "string"
 }
 ```
 
@@ -261,7 +262,7 @@ _Response (400 - Bad Request)_
 
 ```json
 {
-    "errors": [
+    "message": [
         "Name is required"
     ]
 }
@@ -318,7 +319,7 @@ _Response (409 - Database error)_
 
 ```json
 {
-    "message": "This category is still in use!",
+    "message": "This category is not available/still in use!",
 }
 ```
 
@@ -376,10 +377,11 @@ _Response (200 - OK)_
 
 &nbsp;
 
-## 8. GET /products/:id
+## 9. GET /products/:id
 
 Description:
 - Get single product by ID from database
+- Returns a QR code SVG that links to the current page
 
 Request:
 
@@ -415,7 +417,8 @@ _Response (200 - OK)_
         "authorId": "integer",
         "createdAt": "date",
         "updatedAt": "date"
-    }
+    },
+    "qr": "string"
 }
 ```
 
@@ -429,7 +432,7 @@ _Response (404 - Not Found)_
 
 &nbsp;
 
-## 8. POST /products/add
+## 10. POST /products/add
 
 Description:
 - Add new product
@@ -492,7 +495,7 @@ _Response (400 - Bad Request)_
 
 &nbsp;
 
-## 9. PUT /products/:id
+## 11. PUT /products/:id
 
 Description:
 - Edit product with specified ID
@@ -546,7 +549,7 @@ _Response (404 - Not Found)_
 
 &nbsp;
 
-## 10. PATCH /products/:id
+## 12. PATCH /products/:id
 
 Description:
 - Edit the status of product with specified ID
@@ -604,7 +607,7 @@ _Response (404 - Not Found)_
 
 &nbsp;
 
-## 11. DELETE /products/:id
+## 13. DELETE /products/:id
 
 Description:
 - Delete product by id
@@ -660,6 +663,153 @@ _Response (404 - Not Found)_
 ```json
 {
   "message": "Not found"
+}
+```
+
+&nbsp;
+
+## 14. POST /public/register
+
+Description:
+- Register a CUSTOMER
+- CUSTOMER is logged in upon registration
+
+Request:
+
+- body:
+
+```json
+{
+    "email": "string",
+    "password": "string"
+}
+```
+
+_Response (201 - Created)_
+
+```json
+{
+    "message": "Registration success",
+    "access_token": "string"
+}
+```
+
+_Response (400 - Bad Request)_
+
+```json
+{
+    "message": [
+        "Email is required",
+        "Password is required",
+        ...
+    ]
+}
+```
+
+_Response (409 - Constraint Error)_
+
+```json
+{
+    "message": "Email is already in use"
+}
+```
+
+&nbsp;
+
+## 15. POST /public/login
+
+Description:
+- Logs in a CUSTOMER
+
+Request:
+
+- body:
+
+```json
+{
+    "email": "string",
+    "password": "string"
+}
+```
+
+_Response (201 - Created)_
+
+```json
+{
+    "message": "Login success",
+    "access_token": "string"
+}
+```
+
+_Response (401 - Unauthorized)_
+
+```json
+{
+  "message": "Invalid email or password"
+}
+```
+
+&nbsp;
+
+## 16. GET /public/gsign
+
+Description:
+- Logs in a CUSTOMER through Google
+- If CUSTOMER is not in database yet, creates a new CUSTOMER record
+
+Request:
+
+- body:
+
+```json
+{
+  "token": "string"
+}
+```
+
+_Response (201 - Created)_
+
+```json
+{
+  "message": "Login success",
+  "access_token": "Login success"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+  "message": "Login success",
+  "access_token": "Login success"
+}
+```
+
+&nbsp;
+
+## 17. GET /public/products
+
+Description:
+- Get all products in pages
+- Each page consists of no more than 8 records
+- Endpoint accepts 'search', 'filter', and 'page' queries
+- Queries not required
+
+_Response (200 - OK)_
+
+```json
+{
+  "totalItmes": "integer",
+  "products": [
+    {
+      "id": "integer",
+      "name": "string",
+      "description": "string",
+      "price": "integer",
+      "stock": "integer",
+      
+    }
+  ]
 }
 ```
 

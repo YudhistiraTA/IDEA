@@ -49,7 +49,7 @@ module.exports = class ProductController {
             if (!requestedData) throw { name: "notFound" };
             const { data: qr } = await axios.post('https://api.qr-code-generator.com/v1/create?access-token=38_SU4JLulJi9Jp3-JJzK9FFxFJoiZgXgC4CBTRSyTYIo7MgsXylek8RPdbvZj9v', {
                 frame_name: "no-frame",
-                qr_code_text: `https://challenge1-387006.web.app/public/products/${id}`,
+                qr_code_text: `https://challenge1-387006.web.app/product/${id}`,
                 image_format: "SVG",
             });
             res.status(200).json({
@@ -69,8 +69,8 @@ module.exports = class ProductController {
             const deletionStatus = await Product.destroy({ where: { id } });
             if (!deletionStatus) throw { name: "notFound" };
             const newHistory = await History.create({
-                name: "PATCH",
-                description: `Product status with ID ${id} has been archived`,
+                name: "DELETE",
+                description: `Product status with ID ${id} has been deleted`,
                 updatedBy: req.additionalData.id
             });
             res.status(200).json({
