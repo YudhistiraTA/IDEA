@@ -40,6 +40,7 @@ module.exports = class CustomerController {
             })
         }
         catch (err) {
+            console.log(err);
             next(err);
         }
     }

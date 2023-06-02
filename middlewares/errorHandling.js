@@ -3,8 +3,7 @@ module.exports = (err, req, res, next) => {
         case "SequelizeValidationError":
             let emailEmpty = false;
             res.status(400).json({
-                message: "Input failed",
-                errors: err.errors.flatMap((el) => {
+                message: err.errors.flatMap((el) => {
                     if (el.message === 'Email is required') emailEmpty = true;
                     return emailEmpty && el.message === 'Invalid email format' ? [] : el.message;
                 })
