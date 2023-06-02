@@ -1,4 +1,4 @@
-const { User, Product, History } = require('../models');
+const { User, Product, History, Category } = require('../models');
 const axios = require('axios');
 
 module.exports = class ProductController {
@@ -41,9 +41,13 @@ module.exports = class ProductController {
     static async readProductById(req, res, next) {
         try {
             const { id } = req.params;
-            const requestedData = await Product.findByPk(id);
+            const requestedData = await Product.findByPk(id, {
+                include: {
+                    model: Category,
+                }
+            });
             if (!requestedData) throw { name: "notFound" };
-            const { data:qr } = await axios.post('https://api.qr-code-generator.com/v1/create?access-token=38_SU4JLulJi9Jp3-JJzK9FFxFJoiZgXgC4CBTRSyTYIo7MgsXylek8RPdbvZj9v', {
+            const { data: qr } = await axios.post('https://api.qr-code-generator.com/v1/create?access-token=38_SU4JLulJi9Jp3-JJzK9FFxFJoiZgXgC4CBTRSyTYIo7MgsXylek8RPdbvZj9v', {
                 frame_name: "no-frame",
                 qr_code_text: `http://localhost:3000/public/products/${id}`,
                 image_format: "SVG",
