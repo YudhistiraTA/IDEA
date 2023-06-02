@@ -807,9 +807,151 @@ _Response (200 - OK)_
       "description": "string",
       "price": "integer",
       "stock": "integer",
-      
-    }
-  ]
+      "imgUrl": "string",
+      "categoryId": "integer",
+      "authorId": "integer",
+      "createdAt": "date",
+      "updatedAt": "date",
+      "status": "string"
+    },
+    ...
+  ],
+  "totalPages": "integer",
+  "currentPage": "integer"
+}
+```
+
+&nbsp;
+
+## 18. GET /public/products/:id
+
+Description:
+- Get single product by ID from database
+- Returns a QR code SVG that links to the current page
+
+Request:
+
+- headers: 
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+- Params:
+
+```json
+{
+  "id": "integer (required)"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+    "message": "Request success",
+    "requestedData": {
+        "id": "integer",
+        "name": "string",
+        "description": "string",
+        "price": "integer",
+        "stock": "integer",
+        "imgUrl": "string",
+        "categoryId": "integer",
+        "authorId": "integer",
+        "createdAt": "date",
+        "updatedAt": "date"
+    },
+    "qr": "string"
+}
+```
+
+_Response (404 - Not Found)_
+
+```json
+{
+  "message": "Not found"
+}
+```
+
+&nbsp;
+
+## 19. GET /public/wishlist
+
+Description:
+- Get all the products currently logged in user has in their wishlist
+
+Request:
+
+- headers: 
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+    "message": "Request success",
+    "requestedData": {
+        "id": "integer",
+        "productId": "integer",
+        "customerId": "integer",
+        "createdAt": "date",
+        "updatedAt": "date",
+        "Category": {
+          "id": "integer",
+          "name": "string",
+          "createdAt": "date",
+          "updatedAt": "date"
+        }
+    },
+}
+```
+
+_Response (404 - Not Found)_
+
+```json
+{
+  "message": "Not found"
+}
+```
+
+&nbsp;
+
+## 20. POST /public/wishlist/add/:id
+
+Description:
+- Add specified product to currently logged in user's wishlist
+
+Request:
+
+- headers: 
+
+```json
+{
+  "access_token": "string"
+}
+```
+
+_Response (200 - OK)_
+
+```json
+{
+  "message": "Product with ID <id> added to wishlist"
+}
+```
+
+_Response (404 - Not Found)_
+
+```json
+{
+  "message": "Not found"
 }
 ```
 
